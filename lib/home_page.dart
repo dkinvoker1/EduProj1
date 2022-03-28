@@ -14,44 +14,43 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Center(
-          child: Text("Od farmera do milionera"),
-        ),
-      ),
       body: Center(
-        child: Row(
-          children: <Widget>[
-            Flexible(
-              child: TextButton(
-                child: Image.asset('door.jpg'),
-                onPressed: () {
-                  context.router.push(ResultRoute());
-                },
-              ),
-              flex: 1,
-            ),
-            Flexible(
-              child: TextButton(
-                child: Image.asset('door.jpg'),
-                onPressed: () {
-                  context.router.push(ResultRoute());
-                },
-              ),
-              flex: 1,
-            ),
-            Flexible(
-              child: TextButton(
-                child: Image.asset('door.jpg'),
-                onPressed: () {
-                  context.router.push(ResultRoute());
-                },
-              ),
-              flex: 1,
+        child: Column(
+          children: [
+            Container(
+                width: 600.0,
+                height: 200.0,
+                child: FittedBox(
+                    fit: BoxFit.contain, child: Text("Choose wisely"))),
+            Row(
+              children: <Widget>[
+                DoorWidget(),
+                DoorWidget(),
+                DoorWidget(),
+              ],
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class DoorWidget extends StatelessWidget {
+  const DoorWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Flexible(
+      child: TextButton(
+        child: Image.asset('door.jpg'),
+        onPressed: () {
+          context.router.push(RollRoute());
+        },
+      ),
+      flex: 1,
     );
   }
 }
