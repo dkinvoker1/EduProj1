@@ -4,9 +4,9 @@
 // @CustomAutoRouter        
 import 'package:auto_route/auto_route.dart';
 
-import '../home_page.dart';
-import '../result_page.dart';
-import '../roll_page.dart';
+import '../pages/home_page.dart';
+import '../pages/result_page.dart';
+import '../pages/roll_page.dart';
 
 @MaterialAutoRouter(        
   replaceInRouteName: 'Page,Route',        

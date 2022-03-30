@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:auto_route/auto_route.dart';
 import 'package:edu_proj1/routes/router.gr.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_flavor/flutter_flavor.dart';
 
 class ResultPage extends StatefulWidget {
   ResultPage({Key? key}) : super(key: key);
@@ -12,19 +13,21 @@ class ResultPage extends StatefulWidget {
 }
 
 class _ResultPageState extends State<ResultPage> {
-  var isSucces = Random().nextInt(100) < 30;
-
   @override
   Widget build(BuildContext context) {
+    int _winChance = FlavorConfig.instance.variables["winChance"];
+    var _isSucces = Random().nextInt(100) < _winChance;
+
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
             image: DecorationImage(
-                image:
-                    isSucces ? AssetImage('heven.jpg') : AssetImage('hell.jpg'),
+                image: _isSucces
+                    ? AssetImage('assets/heven.jpg')
+                    : AssetImage('assets/hell.jpg'),
                 fit: BoxFit.cover)),
         child: Center(
-          child: isSucces ? WinWidget() : LoseWidget(),
+          child: _isSucces ? WinWidget() : LoseWidget(),
         ),
       ),
     );
@@ -42,13 +45,19 @@ class WinWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text('''Congratulations!''',
-            textAlign: TextAlign.center, style: TextStyle(fontSize: 100, color: Colors.black)),
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 100,
+            )),
         Container(
           margin: EdgeInsets.symmetric(vertical: 10),
           child: Text('''You just won your mortal soul!
 And after a lifetime of joy,
 do you want to try''',
-              textAlign: TextAlign.center, style: TextStyle(fontSize: 60, color: Colors.black)),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 60,
+              )),
         ),
         TextButton(
           onPressed: () {

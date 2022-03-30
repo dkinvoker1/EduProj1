@@ -1,7 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_flavor/flutter_flavor.dart';
 
-import 'routes/router.gr.dart';
+import '../routes/router.gr.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key}) : super(key: key);
@@ -43,9 +44,16 @@ class DoorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String _doorAssetString = FlavorConfig.instance.variables["door"];
+
     return Flexible(
       child: TextButton(
-        child: Image.asset('door.jpg'),
+        child: Image.asset(
+          _doorAssetString,
+          width: 500,
+          height: 500,
+          fit: BoxFit.contain,
+        ),
         onPressed: () {
           context.router.push(RollRoute());
         },
