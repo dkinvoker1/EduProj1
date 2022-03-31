@@ -1,0 +1,5 @@
+#include "Generated.xcconfig"
+
+FLUTTER_TARGET=lib/main-hell.dart
+ASSET_PREFIX=hell
+BUNDLE_NAME=Hell door

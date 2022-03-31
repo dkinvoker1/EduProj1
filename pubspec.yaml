@@ -29,7 +29,7 @@ dependencies:
 dev_dependencies:
   auto_route_generator: ^3.2.3
   build_runner: null
-  flutter_flavor: ^3.0.3
+  flutter_flavorizr: ^2.1.2
   flutter_test:
     sdk: flutter
 
@@ -68,3 +68,37 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+flavorizr:
+  app:
+    android:
+      flavorDimensions: "flavor-type"
+    ios:
+
+  flavors:
+    hell:
+      app:
+        name: "Hell door"
+
+      android:
+        applicationId: "com.example.hell"
+        icon: "assets/door_hell.jpg"
+        icons: "assets/door_hell.jpg"
+
+      ios:
+        bundleId: "com.example.hell"
+        icon: "assets/doo_hellr.jpg"
+        icons: "assets/door_hell.jpg"
+
+    heven:
+      app:
+        name: "Heven door"
+
+      android:
+        applicationId: "com.example.heven"
+        icon: "assets/door_heven.jpg"
+        icons: "assets/door_heven.jpg"
+      ios:
+        bundleId: "com.example.heven"
+        icon: "assets/door_heven.jpg"
+        icons: "assets/door_heven.jpg"

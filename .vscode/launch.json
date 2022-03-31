@@ -5,16 +5,28 @@
     "version": "0.2.0",
     "configurations": [
         {
-          "name": "PROD",
-          "program": "lib/main_prod.dart",
-          "request": "launch",
-          "type": "dart"
+            "name": "DEV",
+            "program": "lib/main-hell.dart",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "--flavor",
+                "hell",
+                "-t",
+                "lib/main-hell.dart" 
+            ]
         },
         {
-          "name": "DEV",
-          "program": "lib/main_dev.dart",
-          "request": "launch",
-          "type": "dart"
-        }
-      ]
+            "name": "PROD",
+            "program": "lib/main-heven.dart",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "--flavor",
+                "heven",
+                "-t",
+                "lib/main-heven.dart" 
+            ]
+        },
+    ]
 }

@@ -3,7 +3,8 @@ import 'dart:math';
 import 'package:auto_route/auto_route.dart';
 import 'package:edu_proj1/routes/router.gr.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_flavor/flutter_flavor.dart';
+
+import '../flavors.dart';
 
 class ResultPage extends StatefulWidget {
   ResultPage({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class ResultPage extends StatefulWidget {
 class _ResultPageState extends State<ResultPage> {
   @override
   Widget build(BuildContext context) {
-    int _winChance = FlavorConfig.instance.variables["winChance"];
+    int _winChance = F.winChance;
     var _isSucces = Random().nextInt(100) < _winChance;
 
     return Scaffold(

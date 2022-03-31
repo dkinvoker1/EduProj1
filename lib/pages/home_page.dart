@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_flavor/flutter_flavor.dart';
 
+import '../flavors.dart';
 import '../routes/router.gr.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -44,7 +44,7 @@ class DoorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String _doorAssetString = FlavorConfig.instance.variables["door"];
+    String _doorAssetString = F.door;
 
     return Flexible(
       child: TextButton(
