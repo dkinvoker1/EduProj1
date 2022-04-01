@@ -32,6 +32,7 @@ dev_dependencies:
   flutter_flavorizr: ^2.1.2
   flutter_test:
     sdk: flutter
+  rive: ^0.8.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -68,12 +69,11 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
-
 flavorizr:
   app:
     android:
       flavorDimensions: "flavor-type"
-    ios:
+    ios: null
 
   flavors:
     hell:

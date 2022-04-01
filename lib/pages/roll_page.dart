@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:edu_proj1/routes/router.gr.dart';
 import 'package:flutter/material.dart';
+import 'package:rive/rive.dart';
 
 class RollPage extends StatefulWidget {
   RollPage({Key? key}) : super(key: key);
@@ -28,9 +29,7 @@ class _RollPageState extends State<RollPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: CircularProgressIndicator(),
-      ),
+      body: RiveAnimation.asset('assets/flame.riv'),
     );
   }
 }
