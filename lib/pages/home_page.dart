@@ -18,17 +18,20 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
           children: [
-            Container(
-                width: 600.0,
-                height: 200.0,
+            Expanded(
                 child: FittedBox(
-                    fit: BoxFit.contain, child: Text("Choose wisely"))),
-            Row(
-              children: <Widget>[
-                DoorWidget(),
-                DoorWidget(),
-                DoorWidget(),
-              ],
+                    fit: BoxFit.fitWidth,
+                     child: Text("Choose wisely"))),
+            Expanded(
+              flex: 5,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  DoorWidget(),
+                  DoorWidget(),
+                  DoorWidget(),
+                ],
+              ),
             ),
           ],
         ),
@@ -46,19 +49,17 @@ class DoorWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     String _doorAssetString = F.door;
 
-    return Flexible(
-      child: TextButton(
-        child: Image.asset(
-          _doorAssetString,
-          width: 500,
-          height: 500,
-          fit: BoxFit.contain,
+    return Expanded(
+      child: FittedBox(
+        child: TextButton(
+          child: Image.asset(
+            _doorAssetString,
+          ),
+          onPressed: () {
+            context.router.push(RollRoute());
+          },
         ),
-        onPressed: () {
-          context.router.push(RollRoute());
-        },
       ),
-      flex: 1,
     );
   }
 }
