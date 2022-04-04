@@ -22,9 +22,9 @@ class F {
   static int get winChance {
     switch (appFlavor) {
       case Flavor.HELL:
-        return 0;
+        return 20;
       case Flavor.HEVEN:
-        return 100;
+        return 80;
       default:
         return 100;
     }
