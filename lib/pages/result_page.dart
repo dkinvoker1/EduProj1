@@ -18,14 +18,6 @@ class _ResultPageState extends State<ResultPage> {
   Widget build(BuildContext context) {
     int _winChance = F.winChance;
     var _isSucces = Random().nextInt(100) < _winChance;
-    var _congratulation = _isSucces ? '''Congratulations!''' : '''You fool!''';
-    var _explaination = _isSucces
-        ? '''You just won your mortal soul!
-And after a lifetime of joy,
-do you want to try'''
-        : '''You just lost your mortal soul!
-And after a lifetime of suffering,
-do you want to try''';
 
     return Scaffold(
       body: Container(
@@ -42,15 +34,18 @@ do you want to try''';
               Expanded(
                 flex: 2,
                 child: FittedBox(
-                  child: Text(_congratulation, textAlign: TextAlign.center)),
+                    child: Text(getTitle(_isSucces),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: _isSucces ? Colors.black : Colors.white))),
               ),
               Expanded(
                 flex: 3,
                 child: FittedBox(
-                  child: Text(
-                    _explaination,
-                    textAlign: TextAlign.center,
-                  ),
+                  child: Text(getExplaination(_isSucces),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: _isSucces ? Colors.black : Colors.white)),
                 ),
               ),
               Expanded(
@@ -72,5 +67,21 @@ do you want to try''';
         ),
       ),
     );
+  }
+
+  String getTitle(bool _isSucces) {
+    var _title = _isSucces ? '''Congratulations!''' : '''You fool!''';
+    return _title;
+  }
+
+  String getExplaination(bool _isSucces) {
+    var _explaination = _isSucces
+        ? '''You just won your mortal soul!
+And after a lifetime of joy,
+do you want to try'''
+        : '''You just lost your mortal soul!
+And after a lifetime of suffering,
+do you want to try''';
+    return _explaination;
   }
 }
