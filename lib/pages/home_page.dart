@@ -1,11 +1,10 @@
-import 'dart:html';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import '../flavors.dart';
 import '../routes/router.gr.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key}) : super(key: key);
@@ -94,9 +93,9 @@ class DoorRowWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        DoorWidget(),
-        DoorWidget(),
-        DoorWidget(),
+        DoorWidget(doorTag: '1'),
+        DoorWidget(doorTag: '2'),
+        DoorWidget(doorTag: '3'),
       ],
     );
   }
@@ -112,9 +111,9 @@ class DoorColumnWidget extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
-        DoorWidget(),
-        DoorWidget(),
-        DoorWidget(),
+        DoorWidget(doorTag: '1'),
+        DoorWidget(doorTag: '2'),
+        DoorWidget(doorTag: '3'),
       ],
     );
   }
@@ -123,7 +122,9 @@ class DoorColumnWidget extends StatelessWidget {
 class DoorWidget extends StatelessWidget {
   const DoorWidget({
     Key? key,
+    required this.doorTag,
   }) : super(key: key);
+  final String doorTag;
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +136,11 @@ class DoorWidget extends StatelessWidget {
           child: Image.asset(
             _doorAssetString,
           ),
-          onPressed: () {
+          onPressed: () async {
+            await FirebaseAnalytics.instance.logEvent(
+              name: "door " + doorTag,
+            );
+
             context.router.push(RollRoute());
           },
         ),
