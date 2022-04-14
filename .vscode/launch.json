@@ -9,6 +9,7 @@
             "program": "lib/main-hell.dart",
             "request": "launch",
             "type": "dart",
+            "flutterMode": "debug",
             "args": [
                 "--flavor",
                 "hell",
@@ -21,6 +22,7 @@
             "program": "lib/main-heven.dart",
             "request": "launch",
             "type": "dart",
+            "flutterMode": "debug",
             "args": [
                 "--flavor",
                 "heven",
