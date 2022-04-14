@@ -3,8 +3,10 @@ import 'dart:math';
 import 'package:auto_route/auto_route.dart';
 import 'package:edu_proj1/routes/router.gr.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../flavors.dart';
+import '../models/result.dart';
 
 class ResultPage extends StatefulWidget {
   ResultPage({Key? key}) : super(key: key);
@@ -14,16 +16,34 @@ class ResultPage extends StatefulWidget {
 }
 
 class _ResultPageState extends State<ResultPage> {
+  int _winChance = F.winChance;
+  bool _isHeven = true;
+  final resultsRef =
+      FirebaseFirestore.instance.collection('results').withConverter<Result>(
+            fromFirestore: (snapshot, _) => Result.fromJson(snapshot.data()!),
+            toFirestore: (movie, _) => movie.toJson(),
+          );
+
+  @override
+  void initState() {
+    super.initState();
+    _isHeven = Random().nextInt(100) < _winChance;
+    addResultToDb(_isHeven);
+  }
+
+  void addResultToDb(bool isHeven) async {
+    await resultsRef.add(
+      Result(isHeven: isHeven),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    int _winChance = F.winChance;
-    var _isSucces = Random().nextInt(100) < _winChance;
-
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: _isSucces
+                image: _isHeven
                     ? AssetImage('assets/heven.jpg')
                     : AssetImage('assets/hell.jpg'),
                 fit: BoxFit.cover)),
@@ -34,18 +54,18 @@ class _ResultPageState extends State<ResultPage> {
               Expanded(
                 flex: 2,
                 child: FittedBox(
-                    child: Text(getTitle(_isSucces),
+                    child: Text(getTitle(_isHeven),
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            color: _isSucces ? Colors.black : Colors.white))),
+                            color: _isHeven ? Colors.black : Colors.white))),
               ),
               Expanded(
                 flex: 3,
                 child: FittedBox(
-                  child: Text(getExplaination(_isSucces),
+                  child: Text(getExplaination(_isHeven),
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          color: _isSucces ? Colors.black : Colors.white)),
+                          color: _isHeven ? Colors.black : Colors.white)),
                 ),
               ),
               Expanded(
@@ -58,7 +78,7 @@ class _ResultPageState extends State<ResultPage> {
                     child: Text("Again?",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            color: _isSucces ? Colors.black : Colors.white)),
+                            color: _isHeven ? Colors.black : Colors.white)),
                   ),
                 ),
               )

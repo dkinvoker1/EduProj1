@@ -57,6 +57,15 @@ class _MyHomePageState extends State<MyHomePage> {
                               : previousChildren.last;
                         },
                       )),
+                  IconButton(
+                      onPressed: () async {
+                        await FirebaseAnalytics.instance.logEvent(
+                          name: "history",
+                        );
+
+                        context.router.push(HistoryRoute());
+                      },
+                      icon: Icon(Icons.history_edu))
                 ],
               )
             : Column(
