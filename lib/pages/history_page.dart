@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:edu_proj1/routes/router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../models/result.dart';
 
@@ -13,16 +14,19 @@ class HistoryPage extends StatefulWidget {
 }
 
 class _HistoryPageState extends State<HistoryPage> {
-  var _resultsStream = FirebaseFirestore.instance
-      .collection('results')
-      .withConverter<Result>(
-        fromFirestore: (snapshot, _) => Result.fromJson(snapshot.data()!),
-        toFirestore: (movie, _) => movie.toJson(),
-      )
-      .snapshots();
+  final String uid = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   Widget build(BuildContext context) {
+    var _resultsStream = FirebaseFirestore.instance
+        .collection('results')
+        .where('userUid', isEqualTo: uid)
+        .withConverter<Result>(
+          fromFirestore: (snapshot, _) => Result.fromJson(snapshot.data()!),
+          toFirestore: (movie, _) => movie.toJson(),
+        )
+        .snapshots();
+        
     return Scaffold(
       body: StreamBuilder(
           stream: _resultsStream,

@@ -31,56 +31,8 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: Center(
         child: kIsWeb
-            ? Column(
-                children: [
-                  Expanded(
-                      child: FittedBox(
-                          fit: BoxFit.fitWidth, child: Text("Choose wisely"))),
-                  Expanded(
-                      flex: 5,
-                      child: AnimatedSwitcher(
-                        child: current,
-                        duration: Duration(milliseconds: 400),
-                        transitionBuilder:
-                            (Widget child, Animation<double> animation) {
-                          final offsetAnimation = Tween(
-                            begin: 0.25,
-                            end: 0.0,
-                          ).animate(animation);
-                          return RotationTransition(
-                              turns: offsetAnimation, child: child);
-                        },
-                        layoutBuilder: (Widget? currentChild,
-                            List<Widget> previousChildren) {
-                          return currentChild != null
-                              ? currentChild
-                              : previousChildren.last;
-                        },
-                      )),
-                  IconButton(
-                      onPressed: () async {
-                        await FirebaseAnalytics.instance.logEvent(
-                          name: "history",
-                        );
-
-                        context.router.push(HistoryRoute());
-                      },
-                      icon: Icon(Icons.history_edu))
-                ],
-              )
-            : Column(
-                children: [
-                  Expanded(
-                      child: FittedBox(
-                          fit: BoxFit.fitWidth, child: Text("Choose wisely"))),
-                  Expanded(
-                      flex: 5,
-                      child: AnimatedSwitcher(
-                        child: current,
-                        duration: Duration(milliseconds: 300),
-                      )),
-                ],
-              ),
+            ? WebVersionWidget(current: current)
+            : MobileVersionWidget(current: current),
       ),
     );
   }
@@ -89,6 +41,102 @@ class _MyHomePageState extends State<MyHomePage> {
     Size _size = MediaQuery.of(context).size;
     var _isLandscape = _size.width > _size.height;
     return _isLandscape;
+  }
+}
+
+class WebVersionWidget extends StatelessWidget {
+  const WebVersionWidget({
+    Key? key,
+    required this.current,
+  }) : super(key: key);
+
+  final Widget current;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        TitleWidget(),
+        Expanded(
+            flex: 5,
+            child: AnimatedSwitcher(
+              child: current,
+              duration: Duration(milliseconds: 400),
+              transitionBuilder: (Widget child, Animation<double> animation) {
+                final offsetAnimation = Tween(
+                  begin: 0.25,
+                  end: 0.0,
+                ).animate(animation);
+                return RotationTransition(turns: offsetAnimation, child: child);
+              },
+              layoutBuilder:
+                  (Widget? currentChild, List<Widget> previousChildren) {
+                return currentChild != null
+                    ? currentChild
+                    : previousChildren.last;
+              },
+            )),
+        HistoryButtonWidget()
+      ],
+    );
+  }
+}
+
+class MobileVersionWidget extends StatelessWidget {
+  const MobileVersionWidget({
+    Key? key,
+    required this.current,
+  }) : super(key: key);
+
+  final Widget current;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        TitleWidget(),
+        Expanded(
+            flex: 5,
+            child: AnimatedSwitcher(
+              child: current,
+              duration: Duration(milliseconds: 300),
+            )),
+        HistoryButtonWidget()
+      ],
+    );
+  }
+}
+
+class TitleWidget extends StatelessWidget {
+  const TitleWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+        child: FittedBox(fit: BoxFit.fitWidth, child: Text("Choose wisely")));
+  }
+}
+
+class HistoryButtonWidget extends StatelessWidget {
+  const HistoryButtonWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: IconButton(
+          onPressed: () async {
+            await FirebaseAnalytics.instance.logEvent(
+              name: "history",
+            );
+
+            context.router.push(HistoryRoute());
+          },
+          icon: Icon(Icons.history_edu)),
+    );
   }
 }
 
