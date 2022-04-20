@@ -27,8 +27,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    _loginController.text = 'abc@gmail.com';
-    _passwordController.text = 'abc123a';
+    _loginController.text = '';
+    _passwordController.text = '';
 
     var _loginForm = Column(
       mainAxisAlignment: MainAxisAlignment.center,

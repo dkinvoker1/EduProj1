@@ -5,6 +5,7 @@ import '../flavors.dart';
 import '../routes/router.gr.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key}) : super(key: key);
@@ -18,6 +19,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var currentUser = FirebaseAuth.instance.currentUser;
+
+    if (currentUser == null) {
+      context.router.push(LoginRoute());
+    }
+
     if (isLandscape(context)) {
       setState(() {
         current = DoorRowWidget();
@@ -28,13 +35,15 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     }
 
-    return Scaffold(
-      body: Center(
-        child: kIsWeb
-            ? WebVersionWidget(current: current)
-            : MobileVersionWidget(current: current),
-      ),
-    );
+    return currentUser == null
+        ? Container()
+        : Scaffold(
+            body: Center(
+              child: kIsWeb
+                  ? WebVersionWidget(current: current)
+                  : MobileVersionWidget(current: current),
+            ),
+          );
   }
 
   bool isLandscape(BuildContext context) {
@@ -56,6 +65,7 @@ class WebVersionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        MenuWidget(),
         TitleWidget(),
         Expanded(
             flex: 5,
@@ -76,7 +86,6 @@ class WebVersionWidget extends StatelessWidget {
                     : previousChildren.last;
               },
             )),
-        HistoryButtonWidget()
       ],
     );
   }
@@ -94,6 +103,7 @@ class MobileVersionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        MenuWidget(),
         TitleWidget(),
         Expanded(
             flex: 5,
@@ -101,9 +111,60 @@ class MobileVersionWidget extends StatelessWidget {
               child: current,
               duration: Duration(milliseconds: 300),
             )),
-        HistoryButtonWidget()
       ],
     );
+  }
+}
+
+class MenuWidget extends StatelessWidget {
+  const MenuWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        HistoryButtonWidget(),
+        LogOutButtonWidget(),
+      ],
+    );
+  }
+}
+
+class HistoryButtonWidget extends StatelessWidget {
+  const HistoryButtonWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+        onPressed: () async {
+          await FirebaseAnalytics.instance.logEvent(
+            name: "history",
+          );
+
+          context.router.push(HistoryRoute());
+        },
+        icon: Icon(Icons.history_edu));
+  }
+}
+
+class LogOutButtonWidget extends StatelessWidget {
+  const LogOutButtonWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+        onPressed: () async {
+          await FirebaseAuth.instance.signOut();
+          context.router.push(LoginRoute());
+        },
+        icon: Icon(Icons.logout));
   }
 }
 
@@ -116,27 +177,6 @@ class TitleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
         child: FittedBox(fit: BoxFit.fitWidth, child: Text("Choose wisely")));
-  }
-}
-
-class HistoryButtonWidget extends StatelessWidget {
-  const HistoryButtonWidget({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: IconButton(
-          onPressed: () async {
-            await FirebaseAnalytics.instance.logEvent(
-              name: "history",
-            );
-
-            context.router.push(HistoryRoute());
-          },
-          icon: Icon(Icons.history_edu)),
-    );
   }
 }
 
