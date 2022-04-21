@@ -29,16 +29,8 @@ class _RollPageState extends State<RollPage> {
 
   @override
   Widget build(BuildContext context) {
-    var currentUser = FirebaseAuth.instance.currentUser;
-
-    if (currentUser == null) {
-      context.router.push(LoginRoute());
-    }
-
-    return currentUser == null
-        ? Container()
-        : Scaffold(
-            body: RiveAnimation.asset('assets/flame.riv'),
-          );
+    return Scaffold(
+      body: RiveAnimation.asset('assets/flame.riv'),
+    );
   }
 }

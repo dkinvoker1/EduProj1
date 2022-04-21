@@ -52,6 +52,9 @@ class _LoginPageState extends State<LoginPage> {
               border: OutlineInputBorder(),
               hintText: 'Password',
             ),
+            obscureText: true,
+            enableSuggestions: false,
+            autocorrect: false,
           ),
         ),
         IconButton(

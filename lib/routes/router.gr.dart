@@ -11,7 +11,7 @@
 // ignore_for_file: type=lint
 
 import 'package:auto_route/auto_route.dart' as _i6;
-import 'package:flutter/foundation.dart' as _i8;
+import 'package:flutter/foundation.dart' as _i9;
 import 'package:flutter/material.dart' as _i7;
 
 import '../pages/history_page.dart' as _i5;
@@ -19,10 +19,15 @@ import '../pages/home_page.dart' as _i2;
 import '../pages/login.dart' as _i1;
 import '../pages/result_page.dart' as _i4;
 import '../pages/roll_page.dart' as _i3;
+import 'authGuard.dart' as _i8;
 
 class AppRouter extends _i6.RootStackRouter {
-  AppRouter([_i7.GlobalKey<_i7.NavigatorState>? navigatorKey])
+  AppRouter(
+      {_i7.GlobalKey<_i7.NavigatorState>? navigatorKey,
+      required this.authGuard})
       : super(navigatorKey);
+
+  final _i8.AuthGuard authGuard;
 
   @override
   final Map<String, _i6.PageFactory> pagesMap = {
@@ -61,17 +66,21 @@ class AppRouter extends _i6.RootStackRouter {
   @override
   List<_i6.RouteConfig> get routes => [
         _i6.RouteConfig(LoginRoute.name, path: '/'),
-        _i6.RouteConfig(MyHomeRoute.name, path: '/my-home-page'),
-        _i6.RouteConfig(RollRoute.name, path: '/roll-page'),
-        _i6.RouteConfig(ResultRoute.name, path: '/result-page'),
-        _i6.RouteConfig(HistoryRoute.name, path: '/history-page')
+        _i6.RouteConfig(MyHomeRoute.name,
+            path: '/my-home-page', guards: [authGuard]),
+        _i6.RouteConfig(RollRoute.name,
+            path: '/roll-page', guards: [authGuard]),
+        _i6.RouteConfig(ResultRoute.name,
+            path: '/result-page', guards: [authGuard]),
+        _i6.RouteConfig(HistoryRoute.name,
+            path: '/history-page', guards: [authGuard])
       ];
 }
 
 /// generated route for
 /// [_i1.LoginPage]
 class LoginRoute extends _i6.PageRouteInfo<LoginRouteArgs> {
-  LoginRoute({_i8.Key? key})
+  LoginRoute({_i9.Key? key})
       : super(LoginRoute.name, path: '/', args: LoginRouteArgs(key: key));
 
   static const String name = 'LoginRoute';
@@ -80,7 +89,7 @@ class LoginRoute extends _i6.PageRouteInfo<LoginRouteArgs> {
 class LoginRouteArgs {
   const LoginRouteArgs({this.key});
 
-  final _i8.Key? key;
+  final _i9.Key? key;
 
   @override
   String toString() {
@@ -91,7 +100,7 @@ class LoginRouteArgs {
 /// generated route for
 /// [_i2.MyHomePage]
 class MyHomeRoute extends _i6.PageRouteInfo<MyHomeRouteArgs> {
-  MyHomeRoute({_i8.Key? key})
+  MyHomeRoute({_i9.Key? key})
       : super(MyHomeRoute.name,
             path: '/my-home-page', args: MyHomeRouteArgs(key: key));
 
@@ -101,7 +110,7 @@ class MyHomeRoute extends _i6.PageRouteInfo<MyHomeRouteArgs> {
 class MyHomeRouteArgs {
   const MyHomeRouteArgs({this.key});
 
-  final _i8.Key? key;
+  final _i9.Key? key;
 
   @override
   String toString() {
@@ -112,7 +121,7 @@ class MyHomeRouteArgs {
 /// generated route for
 /// [_i3.RollPage]
 class RollRoute extends _i6.PageRouteInfo<RollRouteArgs> {
-  RollRoute({_i8.Key? key})
+  RollRoute({_i9.Key? key})
       : super(RollRoute.name,
             path: '/roll-page', args: RollRouteArgs(key: key));
 
@@ -122,7 +131,7 @@ class RollRoute extends _i6.PageRouteInfo<RollRouteArgs> {
 class RollRouteArgs {
   const RollRouteArgs({this.key});
 
-  final _i8.Key? key;
+  final _i9.Key? key;
 
   @override
   String toString() {
@@ -133,7 +142,7 @@ class RollRouteArgs {
 /// generated route for
 /// [_i4.ResultPage]
 class ResultRoute extends _i6.PageRouteInfo<ResultRouteArgs> {
-  ResultRoute({_i8.Key? key})
+  ResultRoute({_i9.Key? key})
       : super(ResultRoute.name,
             path: '/result-page', args: ResultRouteArgs(key: key));
 
@@ -143,7 +152,7 @@ class ResultRoute extends _i6.PageRouteInfo<ResultRouteArgs> {
 class ResultRouteArgs {
   const ResultRouteArgs({this.key});
 
-  final _i8.Key? key;
+  final _i9.Key? key;
 
   @override
   String toString() {
@@ -154,7 +163,7 @@ class ResultRouteArgs {
 /// generated route for
 /// [_i5.HistoryPage]
 class HistoryRoute extends _i6.PageRouteInfo<HistoryRouteArgs> {
-  HistoryRoute({_i8.Key? key})
+  HistoryRoute({_i9.Key? key})
       : super(HistoryRoute.name,
             path: '/history-page', args: HistoryRouteArgs(key: key));
 
@@ -164,7 +173,7 @@ class HistoryRoute extends _i6.PageRouteInfo<HistoryRouteArgs> {
 class HistoryRouteArgs {
   const HistoryRouteArgs({this.key});
 
-  final _i8.Key? key;
+  final _i9.Key? key;
 
   @override
   String toString() {

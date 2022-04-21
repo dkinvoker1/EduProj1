@@ -42,64 +42,54 @@ class _ResultPageState extends State<ResultPage> {
 
   @override
   Widget build(BuildContext context) {
-    var currentUser = FirebaseAuth.instance.currentUser;
-
-    if (currentUser == null) {
-      context.router.push(LoginRoute());
-    }
-
-    return currentUser == null
-        ? Container()
-        : Scaffold(
-            body: Container(
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: _isHeven
-                          ? AssetImage('assets/heven.jpg')
-                          : AssetImage('assets/hell.jpg'),
-                      fit: BoxFit.cover)),
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Expanded(
-                      flex: 2,
-                      child: FittedBox(
-                          child: Text(getTitle(_isHeven),
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color:
-                                      _isHeven ? Colors.black : Colors.white))),
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: FittedBox(
-                        child: Text(getExplaination(_isHeven),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: _isHeven ? Colors.black : Colors.white)),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 2,
-                      child: FittedBox(
-                        child: TextButton(
-                          onPressed: () {
-                            context.router.push(MyHomeRoute());
-                          },
-                          child: Text("Again?",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color:
-                                      _isHeven ? Colors.black : Colors.white)),
-                        ),
-                      ),
-                    )
-                  ],
+    return Scaffold(
+      body: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: _isHeven
+                    ? AssetImage('assets/heven.jpg')
+                    : AssetImage('assets/hell.jpg'),
+                fit: BoxFit.cover)),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Expanded(
+                flex: 2,
+                child: FittedBox(
+                    child: Text(getTitle(_isHeven),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: _isHeven ? Colors.black : Colors.white))),
+              ),
+              Expanded(
+                flex: 3,
+                child: FittedBox(
+                  child: Text(getExplaination(_isHeven),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: _isHeven ? Colors.black : Colors.white)),
                 ),
               ),
-            ),
-          );
+              Expanded(
+                flex: 2,
+                child: FittedBox(
+                  child: TextButton(
+                    onPressed: () {
+                      context.router.push(MyHomeRoute());
+                    },
+                    child: Text("Again?",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: _isHeven ? Colors.black : Colors.white)),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   String getTitle(bool _isSucces) {

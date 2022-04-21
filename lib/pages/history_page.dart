@@ -18,12 +18,6 @@ class _HistoryPageState extends State<HistoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    var currentUser = FirebaseAuth.instance.currentUser;
-
-    if (currentUser == null) {
-      context.router.push(LoginRoute());
-    }
-
     var _resultsStream = FirebaseFirestore.instance
         .collection('results')
         .where('userUid', isEqualTo: uid)
@@ -33,50 +27,47 @@ class _HistoryPageState extends State<HistoryPage> {
         )
         .snapshots();
 
-    return currentUser == null
-        ? Container()
-        : Scaffold(
-            body: StreamBuilder(
-                stream: _resultsStream,
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot<Result>> snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Text("Waiting for data");
-                  }
+    return Scaffold(
+      body: StreamBuilder(
+          stream: _resultsStream,
+          builder: (BuildContext context,
+              AsyncSnapshot<QuerySnapshot<Result>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Text("Waiting for data");
+            }
 
-                  var _hevenCount = snapshot.data!.docs
-                      .where((element) => element.data().isHeven)
-                      .length;
+            var _hevenCount = snapshot.data!.docs
+                .where((element) => element.data().isHeven)
+                .length;
 
-                  var _hellCount = snapshot.data!.docs
-                      .where((element) => !element.data().isHeven)
-                      .length;
+            var _hellCount = snapshot.data!.docs
+                .where((element) => !element.data().isHeven)
+                .length;
 
-                  return Center(
-                    child: Column(
-                      children: [
-                        Expanded(
-                            child: FittedBox(
-                                fit: BoxFit.fitWidth,
-                                child:
-                                    Text("Heven: " + _hevenCount.toString()))),
-                        Expanded(
-                            child: FittedBox(
-                                fit: BoxFit.fitWidth,
-                                child: Text("Hell: " + _hellCount.toString()))),
-                        Expanded(
-                            child: FittedBox(
+            return Center(
+              child: Column(
+                children: [
+                  Expanded(
+                      child: FittedBox(
                           fit: BoxFit.fitWidth,
-                          child: IconButton(
-                              onPressed: () async {
-                                context.router.push(MyHomeRoute());
-                              },
-                              icon: Icon(Icons.arrow_back_rounded)),
-                        ))
-                      ],
-                    ),
-                  );
-                }),
-          );
+                          child: Text("Heven: " + _hevenCount.toString()))),
+                  Expanded(
+                      child: FittedBox(
+                          fit: BoxFit.fitWidth,
+                          child: Text("Hell: " + _hellCount.toString()))),
+                  Expanded(
+                      child: FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: IconButton(
+                        onPressed: () async {
+                          context.router.push(MyHomeRoute());
+                        },
+                        icon: Icon(Icons.arrow_back_rounded)),
+                  ))
+                ],
+              ),
+            );
+          }),
+    );
   }
 }

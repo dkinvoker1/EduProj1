@@ -1,9 +1,10 @@
 import 'package:edu_proj1/flavors.dart';
+import 'package:edu_proj1/routes/authGuard.dart';
 import 'package:edu_proj1/routes/router.gr.dart';
 import 'package:flutter/material.dart';
 
 class App extends StatelessWidget {
-  final _appRouter = AppRouter();
+  final _appRouter = AppRouter(authGuard: AuthGuard());
 
   @override
   Widget build(BuildContext context) {

@@ -19,12 +19,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    var currentUser = FirebaseAuth.instance.currentUser;
-
-    if (currentUser == null) {
-      context.router.push(LoginRoute());
-    }
-
     if (isLandscape(context)) {
       setState(() {
         current = DoorRowWidget();
@@ -35,15 +29,13 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     }
 
-    return currentUser == null
-        ? Container()
-        : Scaffold(
-            body: Center(
-              child: kIsWeb
-                  ? WebVersionWidget(current: current)
-                  : MobileVersionWidget(current: current),
-            ),
-          );
+    return Scaffold(
+      body: Center(
+        child: kIsWeb
+            ? WebVersionWidget(current: current)
+            : MobileVersionWidget(current: current),
+      ),
+    );
   }
 
   bool isLandscape(BuildContext context) {
