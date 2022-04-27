@@ -2,42 +2,25 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../routes/router.gr.dart';
 
-class LoginPage extends StatefulWidget {
-  LoginPage({Key? key}) : super(key: key);
-
-  @override
-  _LoginPageState createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  final _loginController = TextEditingController();
-  final _passwordController = TextEditingController();
-
-  var _comunicate = " ";
-
-  @override
-  void dispose() {
-    _loginController.dispose();
-    _passwordController.dispose();
-    super.dispose();
-  }
-
+class LoginPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    _loginController.text = '';
-    _passwordController.text = '';
+    final errorTextState = useState(" ");
+    var loginTextController = useTextEditingController();
+    var passwordTextController = useTextEditingController();
 
     var _loginForm = Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(_comunicate, style: TextStyle(color: Colors.red)),
+        Text(errorTextState.value, style: TextStyle(color: Colors.red)),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextField(
-            controller: _loginController,
+            controller: loginTextController,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               hintText: 'Login',
@@ -47,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextField(
-            controller: _passwordController,
+            controller: passwordTextController,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
               hintText: 'Password',
@@ -61,15 +44,15 @@ class _LoginPageState extends State<LoginPage> {
             onPressed: () async {
               try {
                 await FirebaseAuth.instance.signInWithEmailAndPassword(
-                    email: _loginController.text,
-                    password: _passwordController.text);
+                    email: loginTextController.text,
+                    password: passwordTextController.text);
 
                 context.router.push(MyHomeRoute());
               } on FirebaseAuthException catch (e) {
-                if (e.code == 'user-not-found' || e.code == 'wrong-password') {
-                  setState(() {
-                    _comunicate = 'Wrong credentials.';
-                  });
+                if (e.code == 'invalid-email' ||
+                    e.code == 'user-not-found' ||
+                    e.code == 'wrong-password') {
+                  errorTextState.value = 'Wrong credentials.';
                 }
               }
             },

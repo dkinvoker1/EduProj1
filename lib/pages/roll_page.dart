@@ -4,7 +4,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:edu_proj1/routes/router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:rive/rive.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class RollPage extends StatefulWidget {
   RollPage({Key? key}) : super(key: key);
