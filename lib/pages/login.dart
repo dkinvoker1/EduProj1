@@ -10,8 +10,8 @@ class LoginPage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final errorTextState = useState(" ");
-    var loginTextController = useTextEditingController();
-    var passwordTextController = useTextEditingController();
+    var loginTextController = useTextEditingController(text: 's@gmail.com');
+    var passwordTextController = useTextEditingController(text: 'abc123');
 
     var _loginForm = Column(
       mainAxisAlignment: MainAxisAlignment.center,

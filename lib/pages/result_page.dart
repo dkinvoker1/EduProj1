@@ -3,11 +3,9 @@ import 'dart:math';
 import 'package:auto_route/auto_route.dart';
 import 'package:edu_proj1/routes/router.gr.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 import '../flavors.dart';
-import '../models/result.dart';
+import '../services/databaseService.dart';
 
 class ResultPage extends StatefulWidget {
   ResultPage({Key? key}) : super(key: key);
@@ -19,25 +17,12 @@ class ResultPage extends StatefulWidget {
 class _ResultPageState extends State<ResultPage> {
   int _winChance = F.winChance;
   bool _isHeven = true;
-  final resultsRef =
-      FirebaseFirestore.instance.collection('results').withConverter<Result>(
-            fromFirestore: (snapshot, _) => Result.fromJson(snapshot.data()!),
-            toFirestore: (movie, _) => movie.toJson(),
-          );
 
   @override
   void initState() {
     super.initState();
     _isHeven = Random().nextInt(100) < _winChance;
-    addResultToDb(_isHeven);
-  }
-
-  void addResultToDb(bool isHeven) async {
-    var uid = FirebaseAuth.instance.currentUser!.uid;
-
-    await resultsRef.add(
-      Result(userUid: uid, isHeven: isHeven),
-    );
+    DatabaseService().addResult(_isHeven);
   }
 
   @override
