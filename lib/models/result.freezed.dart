@@ -22,6 +22,7 @@ Result _$ResultFromJson(Map<String, dynamic> json) {
 mixin _$Result {
   String get userUid => throw _privateConstructorUsedError;
   bool get isHeven => throw _privateConstructorUsedError;
+  int get time => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -32,7 +33,7 @@ mixin _$Result {
 abstract class $ResultCopyWith<$Res> {
   factory $ResultCopyWith(Result value, $Res Function(Result) then) =
       _$ResultCopyWithImpl<$Res>;
-  $Res call({String userUid, bool isHeven});
+  $Res call({String userUid, bool isHeven, int time});
 }
 
 /// @nodoc
@@ -47,6 +48,7 @@ class _$ResultCopyWithImpl<$Res> implements $ResultCopyWith<$Res> {
   $Res call({
     Object? userUid = freezed,
     Object? isHeven = freezed,
+    Object? time = freezed,
   }) {
     return _then(_value.copyWith(
       userUid: userUid == freezed
@@ -57,6 +59,10 @@ class _$ResultCopyWithImpl<$Res> implements $ResultCopyWith<$Res> {
           ? _value.isHeven
           : isHeven // ignore: cast_nullable_to_non_nullable
               as bool,
+      time: time == freezed
+          ? _value.time
+          : time // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -66,7 +72,7 @@ abstract class _$ResultCopyWith<$Res> implements $ResultCopyWith<$Res> {
   factory _$ResultCopyWith(_Result value, $Res Function(_Result) then) =
       __$ResultCopyWithImpl<$Res>;
   @override
-  $Res call({String userUid, bool isHeven});
+  $Res call({String userUid, bool isHeven, int time});
 }
 
 /// @nodoc
@@ -82,6 +88,7 @@ class __$ResultCopyWithImpl<$Res> extends _$ResultCopyWithImpl<$Res>
   $Res call({
     Object? userUid = freezed,
     Object? isHeven = freezed,
+    Object? time = freezed,
   }) {
     return _then(_Result(
       userUid: userUid == freezed
@@ -92,6 +99,10 @@ class __$ResultCopyWithImpl<$Res> extends _$ResultCopyWithImpl<$Res>
           ? _value.isHeven
           : isHeven // ignore: cast_nullable_to_non_nullable
               as bool,
+      time: time == freezed
+          ? _value.time
+          : time // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -99,7 +110,8 @@ class __$ResultCopyWithImpl<$Res> extends _$ResultCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_Result with DiagnosticableTreeMixin implements _Result {
-  const _$_Result({required this.userUid, required this.isHeven});
+  const _$_Result(
+      {required this.userUid, required this.isHeven, required this.time});
 
   factory _$_Result.fromJson(Map<String, dynamic> json) =>
       _$$_ResultFromJson(json);
@@ -108,10 +120,12 @@ class _$_Result with DiagnosticableTreeMixin implements _Result {
   final String userUid;
   @override
   final bool isHeven;
+  @override
+  final int time;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Result(userUid: $userUid, isHeven: $isHeven)';
+    return 'Result(userUid: $userUid, isHeven: $isHeven, time: $time)';
   }
 
   @override
@@ -120,7 +134,8 @@ class _$_Result with DiagnosticableTreeMixin implements _Result {
     properties
       ..add(DiagnosticsProperty('type', 'Result'))
       ..add(DiagnosticsProperty('userUid', userUid))
-      ..add(DiagnosticsProperty('isHeven', isHeven));
+      ..add(DiagnosticsProperty('isHeven', isHeven))
+      ..add(DiagnosticsProperty('time', time));
   }
 
   @override
@@ -129,7 +144,8 @@ class _$_Result with DiagnosticableTreeMixin implements _Result {
         (other.runtimeType == runtimeType &&
             other is _Result &&
             const DeepCollectionEquality().equals(other.userUid, userUid) &&
-            const DeepCollectionEquality().equals(other.isHeven, isHeven));
+            const DeepCollectionEquality().equals(other.isHeven, isHeven) &&
+            const DeepCollectionEquality().equals(other.time, time));
   }
 
   @JsonKey(ignore: true)
@@ -137,7 +153,8 @@ class _$_Result with DiagnosticableTreeMixin implements _Result {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(userUid),
-      const DeepCollectionEquality().hash(isHeven));
+      const DeepCollectionEquality().hash(isHeven),
+      const DeepCollectionEquality().hash(time));
 
   @JsonKey(ignore: true)
   @override
@@ -152,7 +169,9 @@ class _$_Result with DiagnosticableTreeMixin implements _Result {
 
 abstract class _Result implements Result {
   const factory _Result(
-      {required final String userUid, required final bool isHeven}) = _$_Result;
+      {required final String userUid,
+      required final bool isHeven,
+      required final int time}) = _$_Result;
 
   factory _Result.fromJson(Map<String, dynamic> json) = _$_Result.fromJson;
 
@@ -160,6 +179,8 @@ abstract class _Result implements Result {
   String get userUid => throw _privateConstructorUsedError;
   @override
   bool get isHeven => throw _privateConstructorUsedError;
+  @override
+  int get time => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ResultCopyWith<_Result> get copyWith => throw _privateConstructorUsedError;

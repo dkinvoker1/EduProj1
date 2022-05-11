@@ -13,6 +13,7 @@ class Result with _$Result {
   const factory Result({
     required String userUid,
     required bool isHeven,
+    required int time,
   }) = _Result;
 
   factory Result.fromJson(Map<String, Object?> json)
